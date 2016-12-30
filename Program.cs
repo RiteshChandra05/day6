@@ -3,30 +3,49 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
-namespace constuctor
+namespace day6
 {
-    class Program
-    {
-        string xyz;
-        string abc;
+    interface IDisposable
+    { 
+       void dispose();
+    }
 
-        public Program(string XYZ, string ABC)
+    public class disposeee : IDisposable
+    {
+        TextReader tr = null;
+       public void dispose()
         {
-            this.xyz = XYZ;
-            this.abc = ABC;
-            
+            try
+            {           
+                tr = new StreamReader(@"C:\Users\Ritesh\Documents\matter.tx");
+
+                string s = tr.ReadToEnd();
+
+                Console.WriteLine(s);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("no file");
+            }
+            finally
+            {
+              
+                if (tr != null)
+                {
+                    tr.Dispose();
+                    Console.WriteLine("no file");
+
+                }
+            }
         }
-        public void print()
-        {
-            Console.WriteLine(this.xyz + " " + this.abc);
-        }
+
         static void Main(string[] args)
         {
-            Program p1 = new Program("ritesh", "chandra");
-            p1.print();
-
-
+            disposeee d1 = new disposeee();
+            d1.dispose();
+           
         }
     }
 }
